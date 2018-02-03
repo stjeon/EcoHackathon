@@ -34,7 +34,7 @@ app.get('/', function(req, res){
 app.get('/Login/GetUser', function(req,res){
     client.connect(function(err){
         if(err)
-            return console.error('could not connect', err);
+            console.error('could not connect', err);
 
         client.query("SELECT COUNT(*) from accounts where userid = $1 AND password = $2",
             [req.query.username, req.query.password], function(err, results){
@@ -46,8 +46,38 @@ app.get('/Login/GetUser', function(req,res){
     })
 });
 
-app.post('/register', function (req, res){
+app.get('/Home', function(req,res){
+    client.connect(function(err){
+        if(err)
+            console.error('could not connect', err);
 
+        client.query("SELECT * from accounts where userid = $1 AND password = $2",
+            [req.query.username, req.query.password], function(err, results){
+            if(err)
+                console.log(err)
+            console.log(results);
+
+                if(results.rows[0].count == 0)
+                    res.json({value: false});
+                else
+                    res.json({value: true});
+            })
+    })
 });
 
+app.get('/Profile', function(req,res){
+    console.log(req.query)
+    client.connect(function(err){
+        if(err)
+            return console.error('could not connect', err);
+
+        client.query("SELECT * from accounts where userid = $1 AND password = $2",
+            [req.query.username, req.query.password], function(err, results){
+                if(results.rows[0].count == 0)
+                    res.json({value: false});
+                else
+                    res.json({value: true});
+            })
+    })
+});
 
