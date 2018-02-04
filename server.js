@@ -5,8 +5,7 @@ var bodyParser = require('body-parser');
 var cfenv = require("cfenv")
 var pg = require('pg')
 
-const conString =process.env.ELEPHANTSQL_URL ||  'postgres://szwruwjt:JxoAgI47YW2UgHw1hn5gMLrVsPc7rs_0@elmer.db.elephantsql.com:5432/szwruwjt'
-
+const conString =process.env.ELEPHANTSQL_URL ||  
 var client= new pg.Client(conString);
 
 // parse application/x-www-form-urlencoded
